@@ -1,0 +1,53 @@
+{% extends 'all-news/base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    {% block body %}
+
+        {{ block.super }}
+
+            <div class="container">
+
+                <!-- looping through the news -->
+                {% for news_item in news %}
+
+                <div class="row">
+
+                    <!-- displaying news articles -->
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                        <h2 class="text-center"> {{ news_item.title }} </h2>
+
+                    </div>
+
+                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                        <img src="{{ news_item.article_image.url }}" class="img-responsive" alt="Image">
+
+                    </div>
+
+                </div>
+
+                {% empty %}
+
+                <div class="row">
+
+                    <h2 class="text-center"> There Are No News Articles </h2>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+    {% endblock %}
+
+</body>
+</html>
