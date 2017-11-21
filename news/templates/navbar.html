@@ -42,6 +42,54 @@
             </div>
             <!-- end of search form-->
 
+            <div class="col-sm-6 col-md-6">
+
+                {% if user.is_authenticated %}
+
+                    <ul>
+
+                        <li class="dropdown">
+
+                            <a href="#" class="dropdown-toggle btn btn-default" data-toogle="'dropdown" role="button" aria-expanded="false"> Account </a>
+
+                            <span class="caret"></span>
+
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li>
+
+                                    <a href="{% url 'newsToday' %}"> Home </a>
+
+                                </li>
+
+                                <li>
+
+                                    <a href="/accounts/password/change"> Change Password </a>
+
+                                </li>
+
+                                <li>
+
+                                    <a href="/logout"> Logout </a>
+
+                                </li>
+
+                            </ul>
+
+                        </li>
+
+                    </ul>
+
+                {% else %}
+
+                    <li>
+                        <a class="btn btn-default" href="/accounts/login"> Login </a>
+                    </li>
+
+                {% endif %}
+
+            </div>
+
         </div>
 
     </nav>

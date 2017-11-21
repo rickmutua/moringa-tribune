@@ -1,0 +1,3 @@
+Hallo {{ name }}
+
+    Welcome to the Moringa Tribune newsletter. Here you will find the most exciting news about Moringa School
