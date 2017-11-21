@@ -4,6 +4,7 @@ from django.http import HttpResponse, Http404
 import datetime as dt
 
 from .models import Articles
+from .forms import NewsLetterForm
 
 
 # Create your views here.
@@ -12,12 +13,12 @@ def welcome(request):
 
     return render(request, 'welcome.html')
 
-
-def news_of_day(request):
-
-    date = dt.date.today()
-
-    return HttpResponse()
+#
+# def news_of_day(request):
+#
+#     date = dt.date.today()
+#
+#     return HttpResponse()
 
 
 def news_today(request):
@@ -26,7 +27,13 @@ def news_today(request):
 
     news = Articles.todays_news()
 
-    return render(request, 'all-news/todays-news.html', {"date": date,"news":news})
+    if request.method == 'POST':
+        form = NewsLetterForm(request.POST)
+        if form.is_valid():
+            print('valid')
+    else:
+        form = NewsLetterForm()
+    return render(request, 'all-news/todays-news.html', {"date": date, "news": news, "letterForm": form})
 
 # def convert_dates(dates):
 #
@@ -60,33 +67,28 @@ def past_days_news(request, past_date):
     return render(request, 'all-news/past-news.html',{"date": date,"news":news})
 
 
+
 def search_results(request):
 
-    if 'articles' in request.GET and request.GET['articles']:
-
-        search_term = request.GET.get('articles')
-
+    if 'articles' in request.GET and request.GET["articles"]:
+        search_term = request.GET.get("articles")
         searched_articles = Articles.search_by_title(search_term)
+        message = f"{search_term}"
 
-        message = f'{search_term}'
-
-        return render(request, 'all-news/search.html', {'message':message, 'articles':searched_articles})
+        return render(request, 'all-news/search.html', {"message": message, "articles": searched_articles})
 
     else:
-
-        message = "You haven't searched for any article"
-
-        return render(request, 'all-news/search.html', {'message':message})
+        message = "You havent searched for any term"
+        return render(request, 'all-news/search.html', {"message": message})
 
 
 def article(request, article_id):
 
     try:
-        articles = Articles.objects.get(id - article_id)
+        article = Articles.objects.get(id = article_id)
 
-    except:
+    except DoesNotExist:
         raise Http404()
 
-    return render(request, 'all-news/article.html', {'articles':articles})
-
+    return render(request,"all-news/article.html", {"articles": article})
 

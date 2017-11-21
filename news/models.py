@@ -66,4 +66,11 @@ class Articles(models.Model):
         return news
 
 
+class NewsLetterRecipients(models.Model):
+
+    name = models.CharField(max_length=65)
+
+    email = models.EmailField()
+
+
 
