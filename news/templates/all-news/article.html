@@ -29,7 +29,11 @@
 
         <div class="row">
 
-            <p>{{articles.post}}</p>
+            {% autoescape on %}
+
+            {{article.post| safe}}
+
+            {% endautoescape %}
 
         </div>
 

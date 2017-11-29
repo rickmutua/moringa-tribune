@@ -1,11 +1,12 @@
 from django.db import models
+from tinymce.models import HTMLField
 
 import datetime as dt
 
 # Create your models here.
 
 
-class Editor(models.Model):
+class User(models.Model):
 
     first_name = models.CharField(max_length = 30)
     last_name = models.CharField(max_length=30)
@@ -30,9 +31,9 @@ class Tags(models.Model):
 class Articles(models.Model):
 
     title = models.CharField(max_length = 60)
-    post = models.TextField()
+    post = HTMLField()
 
-    editor = models.ForeignKey(Editor)
+    user = models.ForeignKey(User)
     tags = models.ManyToManyField(Tags)
 
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -72,5 +73,13 @@ class NewsLetterRecipients(models.Model):
 
     email = models.EmailField()
 
+
+class MoringaMerch(models.Model):
+
+    name = models.CharField(max_length=40)
+
+    description = models.TextField()
+
+    price = models.DecimalField(decimal_places=2, max_digits=20)
 
 
